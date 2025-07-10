@@ -21,8 +21,13 @@ RUN if [ -z "$ARCH_NAME" ]; then \
             *) echo "Unsupported architecture: $ARCH" && exit 1 ;; \
         esac; \
     fi && \
+    if [ "$BACKHAUL_VERSION" = "latest" ]; then \
+        URL="https://github.com/Musixal/Backhaul/releases/latest/download/backhaul_linux_${ARCH_NAME}.tar.gz"; \
+    else \
+        URL="https://github.com/Musixal/Backhaul/releases/download/$BACKHAUL_VERSION/backhaul_linux_${ARCH_NAME}.tar.gz"; \
+    fi && \
     echo "Downloading Backhaul version $BACKHAUL_VERSION for $ARCH_NAME" && \
-    curl -L "https://github.com/Musixal/Backhaul/releases/download/$BACKHAUL_VERSION/backhaul_linux_${ARCH_NAME}.tar.gz" -o /tmp/backhaul.tar.gz && \
+    curl -L "$URL" -o /tmp/backhaul.tar.gz && \
     tar -xzf /tmp/backhaul.tar.gz -C /tmp && \
     mv /tmp/backhaul /tmp/backhaul-bin && \
     chmod +x /tmp/backhaul-bin && \
