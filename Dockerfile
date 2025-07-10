@@ -56,7 +56,7 @@ RUN addgroup -g 1001 -S appgroup && \
     adduser -u 1001 -S appuser -G appgroup && \
     chown -R appuser:appgroup /app
 
-USER appuser
+# USER appuser
 
 # Set default ports
 EXPOSE 3080 2060
@@ -66,7 +66,7 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
     CMD pgrep backhaul || exit 1
 
 # Run Backhaul
-CMD ["backhaul", "-c", "${BACKHAUL_CONFIG}"]
+CMD backhaul -c "${BACKHAUL_CONFIG}"
 
 # Add labels for GitLab CI and metadata
 LABEL org.opencontainers.image.version="${BACKHAUL_VERSION}" \
